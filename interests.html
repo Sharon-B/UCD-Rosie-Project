@@ -204,7 +204,7 @@
     </footer>
    
     <!--Get the markerclusterer.js file to allow us to add the clusters to our maps -->
-    <script src="https://unpkg.com/@googlemaps/markerclustererplus/dist/index.min.js"></script>
+    <!-- <script src="https://unpkg.com/@googlemaps/markerclustererplus/dist/index.min.js"></script> -->
    <!--Get the actual Google API file which we need to generate our maps:
    async & defer don't do much when script is loaded at the bottom of the page like here but if included at the top they improve page load time
    async loads the script at the same time that the html is loading and then there is a brief pause when the script is executed
@@ -212,8 +212,9 @@
    we can just use the defer tag.
    In the address we also have a callback with the value initMap, we will create this function and it will be invoked once we've recieved the JS files, it
    also includes our API key-->
+    <script src="https://unpkg.com/@google/markerclustererplus@5.1.0/dist/markerclustererplus.min.js"></script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBmDmve0WOO8_Rna6ikUxIovA_mpnByhis&callback=initMap"></script>
-    <script type="module" src="assets/js/maps.js"></script>
+    <script src="assets/js/maps.js"></script>
 </body>
 
 </html>
