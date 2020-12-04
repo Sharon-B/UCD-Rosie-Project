@@ -1,4 +1,3 @@
-import MarkerClusterer from "@googlemaps/markerclustererplus";
 
 function initMap() {
     let map = new google.maps.Map(document.getElementById("map"), {
@@ -24,9 +23,15 @@ function initMap() {
         });
     });
 
+  
+    import MarkerClusterer from '@google/markerclustererplus';
 
     const markerCluster = new MarkerClusterer(map, markers);
 };
+
+/* var markerCluster = new MarkerClusterer(map, markers, {
+     imagePath: "images/maps/"
+ }); */
 
 
 /* Use a built-in JS map() method, it works sim. to a
@@ -42,7 +47,4 @@ than 26 locations it will loop round our string and go from Z back to A instead 
 Then we add a markerCluster (from GM tutorial) which will create our image and cluster them if nec.
 using the clusterer library that we already loaded*/
 
-/* var markerCluster = new MarkerClusterer(map, markers, {
-     imagePath: "images/maps/"
- }); */
 
