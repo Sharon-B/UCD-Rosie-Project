@@ -202,10 +202,11 @@
         </div>
 
     </footer>
-    <!--Get the markerclusterer.js file to allow us to add the clusters to our maps-->
-    <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
-   <!--Get the actual Google API file which we need to generate our maps-->
-   <!--async & defer don't do much when script is loaded at the bottom of the page like here but if included at the top they improve page load time
+   
+    <!--Get the markerclusterer.js file to allow us to add the clusters to our maps -->
+    <script src="https://unpkg.com/@googlemaps/markerclustererplus/dist/index.min.js"></script>
+   <!--Get the actual Google API file which we need to generate our maps:
+   async & defer don't do much when script is loaded at the bottom of the page like here but if included at the top they improve page load time
    async loads the script at the same time that the html is loading and then there is a brief pause when the script is executed
    defer waits til the page has finished loading bfore the script is executed, google has included these for us here. If we are loading the scripts at the top of the page in the <head>
    we can just use the defer tag.
