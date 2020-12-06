@@ -10,5 +10,31 @@ function fetchGitHubInformation(event) {
         `<div id="loader">
             <img src="assets/css/loader.gif" alt="loading..." />
          </div>`);
-} // If text is entered into input field we will display the loading gif.
+ // If text is entered into input field we will display the loading gif.
 
+/* 
+JQuery promises:
+$.when (
+    something has finished happening
+).then (
+    do something else
+) 
+*/
+
+$.when(
+    $.getJSON('https://api.github.com.users/${username}') //.when takes a function as it's first argument, so we use the getJSON function to retrieve the data from the github api
+).then(
+    function(response) {
+        let userData = response;
+        $("#gh-user-data").html(userInformationHTML(userData));
+    }, function(errorResponse) {
+        if (errorResponse.status === 404) {
+            $("#gh-user-data").html(
+                    `<h2>No info found for user ${username}</h2>`);
+        } else {
+            console.log(errorResponse);
+            $("#gh-user-data").html(
+                `<h2.>Error: ${errorResponse.responseJSON.message}</h2.>`);
+        }
+    });
+}
