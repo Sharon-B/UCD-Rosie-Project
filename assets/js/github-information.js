@@ -44,6 +44,8 @@ function repoInformationHTML(repos) { //As the object returned from our github a
 }
 
 function fetchGitHubInformation(event) {
+    $("#gh-user-data").html(""); //]Setting the html to an empty string for these divs has the effect of emptying these divs each time
+    $("#gh-repo-data").html("");
 
     let username = $("#gh-username").val();
     if (!username) {
@@ -56,34 +58,36 @@ function fetchGitHubInformation(event) {
         `<div id="loader">
             <img src="assets/css/loader.gif" alt="loading..." />
          </div>`);
- // If text is entered into input field we will display the loading gif.
+    // If text is entered into input field we will display the loading gif.
 
-/* 
-JQuery promises:
-$.when (
-    something has finished happening
-).then (
-    do something else
-) 
-*/
+    /* 
+    JQuery promises:
+    $.when (
+        something has finished happening
+    ).then (
+        do something else
+    ) 
+    */
 
-$.when(
-    $.getJSON(`https://api.github.com/users/${username}`), //.when takes a function as it's first argument, so we use the getJSON function to retrieve the data from the github api
-    $.getJSON(`https://api.github.com/users/${username}/repos`) // add a second getJSON to retrieve the users repo data so it ca be displayed
-).then( // then we want to display it in our gh-user-data & gh-repo-data divs:
-    function(firstResponse, secondResponse) { // so we use a function to pass in the respose and declare a userData variable to store it
-        let userData = firstResponse[0]; //Now that we have 2 getJSON calls we will have  responses come back
-        let repoData = secondResponse[0]; // Now we will also have 2 variables one for each response. The when method will return these as arrays so we need to target the first item in each array using the index
-        $("#gh-user-data").html(userInformationHTML(userData)); //set the html of the div to the results of the userInformationHTML function which is yet to be written and set the userData as the argument
-        $("#gh-repo-data").html(repoInformationHTML(repoData)); //set the html of the div to the results of the repoInformationHTML function  and set the repoData as the argument
-    }, function(errorResponse) { //error function if it doesn't work
-        if (errorResponse.status === 404) { // if not found
-            $("#gh-user-data").html( // set html to error message
-                    `<h2>No info found for user ${username}</h2>`);
-        } else { // if it's another error we will console.log out the error
-            console.log(errorResponse);
-            $("#gh-user-data").html( // and set our gh-user-data div to the JSON response error that we got.
-                `<h2.>Error: ${errorResponse.responseJSON.message}</h2.>`);
-        }
-    });
+    $.when(
+        $.getJSON(`https://api.github.com/users/${username}`), //.when takes a function as it's first argument, so we use the getJSON function to retrieve the data from the github api
+        $.getJSON(`https://api.github.com/users/${username}/repos`) // add a second getJSON to retrieve the users repo data so it ca be displayed
+    ).then( // then we want to display it in our gh-user-data & gh-repo-data divs:
+        function(firstResponse, secondResponse) { // so we use a function to pass in the respose and declare a userData variable to store it
+            let userData = firstResponse[0]; //Now that we have 2 getJSON calls we will have  responses come back
+            let repoData = secondResponse[0]; // Now we will also have 2 variables one for each response. The when method will return these as arrays so we need to target the first item in each array using the index
+            $("#gh-user-data").html(userInformationHTML(userData)); //set the html of the div to the results of the userInformationHTML function which is yet to be written and set the userData as the argument
+            $("#gh-repo-data").html(repoInformationHTML(repoData)); //set the html of the div to the results of the repoInformationHTML function  and set the repoData as the argument
+        }, function(errorResponse) { //error function if it doesn't work
+            if (errorResponse.status === 404) { // if not found
+                $("#gh-user-data").html( // set html to error message
+                        `<h2>No info found for user ${username}</h2>`);
+            } else { // if it's another error we will console.log out the error
+                console.log(errorResponse);
+                $("#gh-user-data").html( // and set our gh-user-data div to the JSON response error that we got.
+                    `<h2.>Error: ${errorResponse.responseJSON.message}</h2.>`);
+            }
+        });
 }
+
+$(document).ready(fetchGitHubInformation);
