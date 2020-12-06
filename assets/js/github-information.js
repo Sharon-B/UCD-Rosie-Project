@@ -82,9 +82,9 @@ function fetchGitHubInformation(event) {
             if (errorResponse.status === 404) { // if not found
                 $("#gh-user-data").html( // set html to error message
                         `<h2>No info found for user ${username}</h2>`);
-            } else if (errorResponse.status === 403) {
+            } else if (errorResponse.status === 403) { //set error message for too many requests
                 let resetTime = new Date(errorResponse.getResponseHeader('X-rateLimit-Reset')*1000);
-                $("#gh-user-data").html(`<h4>Too many requests, please wait until ${resetTime.toLocaleTimeString()}</h4>`);
+                $("#gh-user-data").html(`<h4>Too many requests, please wait until ${resetTime.toLocaleTimeString()}</h4>`); //.toLocaleTimeString() sets the time based on the local time of the cpu???
                 
             } else { // if it's another error we will console.log out the error
                 console.log(errorResponse);
