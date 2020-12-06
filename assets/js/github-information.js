@@ -82,6 +82,10 @@ function fetchGitHubInformation(event) {
             if (errorResponse.status === 404) { // if not found
                 $("#gh-user-data").html( // set html to error message
                         `<h2>No info found for user ${username}</h2>`);
+            } else if (errorResponse.status === 403) {
+                let resetTime = new Date(errorResponse.getResponseHeader('X-rateLimit-Reset')*1000);
+                $("#gh-user-data").html(`<h4>Too many requests, please wait until ${resetTime.toLocaleTimeString()}</h4>`);
+                
             } else { // if it's another error we will console.log out the error
                 console.log(errorResponse);
                 $("#gh-user-data").html( // and set our gh-user-data div to the JSON response error that we got.
